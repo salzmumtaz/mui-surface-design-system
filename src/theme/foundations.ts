@@ -32,8 +32,14 @@ const prismFoundations: ThemeOptions = {
   spacing: 8,
   shape: { borderRadius: 14 },
   typography: {
-    fontFamily: 'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-    h1: { fontSize: 'clamp(2.5rem, 5vw, 4.5rem)', fontWeight: 700, letterSpacing: '-0.06em', lineHeight: 0.98 },
+    fontFamily:
+      'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+    h1: {
+      fontSize: 'clamp(2.5rem, 5vw, 4.5rem)',
+      fontWeight: 700,
+      letterSpacing: '-0.06em',
+      lineHeight: 0.98,
+    },
     h2: { fontSize: '1.25rem', fontWeight: 700, letterSpacing: '-0.025em', lineHeight: 1.3 },
     h3: { fontSize: '1.875rem', fontWeight: 700, letterSpacing: '-0.04em', lineHeight: 1.2 },
     subtitle1: { fontSize: '0.875rem', fontWeight: 700, lineHeight: 1.4 },
@@ -50,15 +56,43 @@ const northstarFoundations: ThemeOptions = {
   shape: { borderRadius: 4 },
   typography: {
     fontFamily: 'Arial, Helvetica, sans-serif',
-    h1: { fontFamily: 'Georgia, Times New Roman, serif', fontSize: 'clamp(3rem, 6vw, 5.5rem)', fontWeight: 400, letterSpacing: '-0.045em', lineHeight: 0.92 },
-    h2: { fontFamily: 'Georgia, Times New Roman, serif', fontSize: '1.5rem', fontWeight: 400, letterSpacing: '-0.02em', lineHeight: 1.25 },
-    h3: { fontFamily: 'Georgia, Times New Roman, serif', fontSize: '2.25rem', fontWeight: 400, letterSpacing: '-0.035em', lineHeight: 1.1 },
-    subtitle1: { fontSize: '0.8125rem', fontWeight: 700, letterSpacing: '0.03em', lineHeight: 1.45 },
+    h1: {
+      fontFamily: 'Georgia, Times New Roman, serif',
+      fontSize: 'clamp(3rem, 6vw, 5.5rem)',
+      fontWeight: 400,
+      letterSpacing: '-0.045em',
+      lineHeight: 0.92,
+    },
+    h2: {
+      fontFamily: 'Georgia, Times New Roman, serif',
+      fontSize: '1.5rem',
+      fontWeight: 400,
+      letterSpacing: '-0.02em',
+      lineHeight: 1.25,
+    },
+    h3: {
+      fontFamily: 'Georgia, Times New Roman, serif',
+      fontSize: '2.25rem',
+      fontWeight: 400,
+      letterSpacing: '-0.035em',
+      lineHeight: 1.1,
+    },
+    subtitle1: {
+      fontSize: '0.8125rem',
+      fontWeight: 700,
+      letterSpacing: '0.03em',
+      lineHeight: 1.45,
+    },
     body1: { fontSize: '1.0625rem', lineHeight: 1.75 },
     body2: { fontSize: '0.8125rem', lineHeight: 1.6 },
     caption: { fontSize: '0.6875rem', lineHeight: 1.5 },
     overline: { fontSize: '0.6875rem', fontWeight: 700, letterSpacing: '0.22em', lineHeight: 1.5 },
-    button: { fontSize: '0.8125rem', fontWeight: 700, letterSpacing: '0.02em', textTransform: 'uppercase' },
+    button: {
+      fontSize: '0.8125rem',
+      fontWeight: 700,
+      letterSpacing: '0.02em',
+      textTransform: 'uppercase',
+    },
   },
 };
 

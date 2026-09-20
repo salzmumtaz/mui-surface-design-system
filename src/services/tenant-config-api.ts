@@ -8,8 +8,8 @@ const mockResponses: Record<TenantId, unknown> = {
     themePreset: 'prism',
     brandingVersion: '2026.09.1',
     defaultMode: 'dark',
-    logoUrl: null,
-    features: { analytics: true, teamWorkspace: true },
+    branding: { logoSize: 'default', density: 'comfortable' },
+    features: { analytics: true, teamWorkspace: true, selfService: false },
   },
   northstar: {
     tenantId: 'tenant-northstar-demo',
@@ -17,14 +17,18 @@ const mockResponses: Record<TenantId, unknown> = {
     themePreset: 'northstar',
     brandingVersion: '2026.09.3',
     defaultMode: 'light',
-    logoUrl: null,
-    features: { analytics: true, teamWorkspace: false },
+    branding: { logoSize: 'small', density: 'compact' },
+    features: { analytics: false, teamWorkspace: false, selfService: true },
   },
 };
 
-const wait = (duration: number) => new Promise((resolve) => globalThis.setTimeout(resolve, duration));
+const wait = (duration: number) =>
+  new Promise((resolve) => globalThis.setTimeout(resolve, duration));
 
-export async function fetchTenantConfig(tenant: TenantId, signal?: AbortSignal): Promise<TenantConfig> {
+export async function fetchTenantConfig(
+  tenant: TenantId,
+  signal?: AbortSignal,
+): Promise<TenantConfig> {
   // Production: fetch(`/api/ui-config?tenant=${tenant}`, { signal, credentials: 'include' })
   await wait(650);
   if (signal?.aborted) throw new DOMException('Request aborted', 'AbortError');

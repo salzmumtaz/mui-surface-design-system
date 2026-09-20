@@ -19,17 +19,39 @@ export const components: Components<Omit<Theme, 'components'>> = {
     },
   },
   MuiIconButton: {
-    styleOverrides: { root: ({ theme }) => ({ border: `1px solid ${theme.palette.divider}`, color: theme.palette.text.primary }) },
+    styleOverrides: {
+      root: ({ theme }) => ({
+        border: `1px solid ${theme.palette.divider}`,
+        color: theme.palette.text.primary,
+      }),
+    },
   },
   MuiCard: {
     defaultProps: { elevation: 0 },
     styleOverrides: {
-      root: ({ theme }) => ({ backgroundImage: 'none', border: `1px solid ${theme.palette.divider}` }),
+      root: ({ theme }) => ({
+        backgroundImage: 'none',
+        border: `1px solid ${theme.palette.divider}`,
+      }),
     },
     variants: [
       { props: { variant: 'metric' }, style: { padding: 20, flex: 1, minWidth: 180 } },
-      { props: { variant: 'feature' }, style: ({ theme }) => ({ padding: 16, flex: 1, backgroundColor: 'transparent', borderColor: theme.palette.divider }) },
-      { props: { variant: 'content' }, style: ({ theme }) => ({ padding: 'clamp(1.5rem, 4vw, 2.5rem)', boxShadow: theme.surface.shadow }) },
+      {
+        props: { variant: 'feature' },
+        style: ({ theme }) => ({
+          padding: 16,
+          flex: 1,
+          backgroundColor: 'transparent',
+          borderColor: theme.palette.divider,
+        }),
+      },
+      {
+        props: { variant: 'content' },
+        style: ({ theme }) => ({
+          padding: 'clamp(1.5rem, 4vw, 2.5rem)',
+          boxShadow: theme.surface.shadow,
+        }),
+      },
     ],
   },
   MuiChip: {
@@ -37,7 +59,9 @@ export const components: Components<Omit<Theme, 'components'>> = {
       root: ({ theme }) => ({ borderRadius: theme.surface.tenant === 'northstar' ? 2 : 9 }),
     },
   },
-  MuiLinearProgress: { styleOverrides: { root: { height: 5, borderRadius: 5, flex: 1, minWidth: 48 } } },
+  MuiLinearProgress: {
+    styleOverrides: { root: { height: 5, borderRadius: 5, flex: 1, minWidth: 48 } },
+  },
   MuiListItemIcon: {
     styleOverrides: { root: ({ theme }) => ({ color: 'inherit', minWidth: theme.spacing(4.5) }) },
   },
@@ -46,8 +70,13 @@ export const components: Components<Omit<Theme, 'components'>> = {
       root: ({ theme }) => ({
         borderRadius: 11,
         color: theme.palette.text.secondary,
-        '&.Mui-selected': { color: theme.palette.text.primary, backgroundColor: alpha(theme.palette.primary.main, 0.18) },
-        '&.Mui-selected:hover, &:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.12) },
+        '&.Mui-selected': {
+          color: theme.palette.text.primary,
+          backgroundColor: alpha(theme.palette.primary.main, 0.18),
+        },
+        '&.Mui-selected:hover, &:hover': {
+          backgroundColor: alpha(theme.palette.primary.main, 0.12),
+        },
       }),
     },
   },

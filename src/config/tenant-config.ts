@@ -1,38 +1,36 @@
-import type { TenantId, ThemeFamily } from '../theme/types';
+import { z } from 'zod';
 
-export interface TenantConfig {
-  tenantId: string;
-  displayName: string;
-  themePreset: TenantId;
-  brandingVersion: string;
-  defaultMode: ThemeFamily;
-  logoUrl: string | null;
-  features: {
-    analytics: boolean;
-    teamWorkspace: boolean;
-  };
-}
+const tenantIds = ['prism', 'northstar'] as const;
+const themeFamilies = ['light', 'dark'] as const;
 
-const tenantIds: TenantId[] = ['prism', 'northstar'];
+export const tenantConfigSchema = z.object({
+  tenantId: z.string().min(1),
+  displayName: z.string().min(1),
+  themePreset: z.enum(tenantIds),
+  brandingVersion: z.string().min(1),
+  defaultMode: z.enum(themeFamilies),
+  branding: z
+    .object({
+      logoSize: z.enum(['default', 'small', 'x-small']).default('default'),
+      density: z.enum(['comfortable', 'compact']).default('comfortable'),
+    })
+    .default({ logoSize: 'default', density: 'comfortable' }),
+  features: z
+    .object({
+      analytics: z.boolean().default(false),
+      teamWorkspace: z.boolean().default(false),
+      selfService: z.boolean().default(false),
+    })
+    .default({ analytics: false, teamWorkspace: false, selfService: false }),
+});
+
+export type TenantConfig = z.infer<typeof tenantConfigSchema>;
 
 export function parseTenantConfig(payload: unknown): TenantConfig {
-  if (!payload || typeof payload !== 'object') throw new Error('Tenant configuration is missing.');
-
-  const value = payload as Record<string, unknown>;
-  const features = value.features as Record<string, unknown> | undefined;
-  if (
-    typeof value.tenantId !== 'string' ||
-    typeof value.displayName !== 'string' ||
-    typeof value.brandingVersion !== 'string' ||
-    !tenantIds.includes(value.themePreset as TenantId) ||
-    !['light', 'dark'].includes(value.defaultMode as string) ||
-    (value.logoUrl !== null && typeof value.logoUrl !== 'string') ||
-    !features ||
-    typeof features.analytics !== 'boolean' ||
-    typeof features.teamWorkspace !== 'boolean'
-  ) {
+  const result = tenantConfigSchema.safeParse(payload);
+  if (!result.success) {
+    console.error('Invalid tenant configuration', result.error.flatten());
     throw new Error('Tenant configuration failed validation.');
   }
-
-  return value as unknown as TenantConfig;
+  return result.data;
 }

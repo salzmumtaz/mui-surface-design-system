@@ -12,7 +12,5 @@ type SurfaceProps = PropsWithChildren<{
 export function Surface({ tenant, family, variant, children }: SurfaceProps) {
   const theme = useMemo(() => resolveTheme(tenant, family, variant), [tenant, family, variant]);
 
-  return (
-    <ThemeProvider theme={theme}>{children}</ThemeProvider>
-  );
+  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 }

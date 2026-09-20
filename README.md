@@ -2,7 +2,7 @@
 
 A clean-room portfolio demo of a multi-surface theming architecture built with React, TypeScript, and MUI.
 
-The demo models two independent concepts:
+The demo models three orthogonal concepts:
 
 - **Tenant:** `prism | northstar` — selects brand tokens, typography, geometry, and the complete surface palette.
 - **Theme family:** `light | dark` — selected globally by the user.
@@ -28,6 +28,9 @@ src/theme/foundations.ts          typography, spacing, shape, brand tokens
 src/theme/surfaces.ts             family × surface palette matrix
 src/theme/components.ts           MUI defaults, overrides, and variants
 src/theme/create-surface-theme.ts composition and caching
+src/config/                       validated runtime tenant configuration
+src/services/                     mock asynchronous configuration boundary
+src/store/                        bootstrap, cache, and tenant switching state
 src/components/                   semantic page components and layout
 ```
 
@@ -54,9 +57,10 @@ npm run dev
 ## Production check
 
 ```bash
-npm run build
-npm run lint
+npm run check
 ```
+
+That command verifies formatting, lint rules, the complete theme matrix, TypeScript, and the production bundle. The same check runs in GitHub Actions.
 
 ## Why this exists
 
@@ -73,3 +77,25 @@ tenant toggle → small local loader → validate response → atomic theme swap
 ```
 
 Replace the mock body in `src/services/tenant-config-api.ts` with the real authenticated request; page components and the theme resolver remain unchanged.
+
+Runtime payloads are validated with Zod and missing optional capabilities receive conservative defaults. After bootstrap, a provider exposes configuration through a typed selector rather than string paths:
+
+```tsx
+const logoSize = useTenantConfig((config) => config.branding.logoSize);
+const analyticsEnabled = useTenantConfig((config) => config.features.analytics);
+```
+
+The selector preserves the exact result type and refactors safely. Branding choices use finite values such as `logoSize`, avoiding contradictory flags like `isLogoSmall` and `isLogoXSmall`. Feature components consume capabilities without knowing tenant codes, while the Zustand store remains responsible for asynchronous loading, caching, and tenant switching.
+
+## When this pattern fits
+
+Use this approach when one rendered page must support multiple brands and simultaneous visual contexts—for example, dark navigation, a translucent workspace, and an opaque reading or form surface. It is also useful when tenant configuration arrives at runtime instead of being compiled into separate applications.
+
+For a conventional application with one brand and a global light/dark switch, a single MUI theme and `colorSchemes` are simpler. This repository is a reference implementation for the more demanding multi-brand, multi-surface case, not a replacement for MUI's standard theming API.
+
+## What to inspect in the demo
+
+- Switch **Prism/Northstar** to see runtime configuration alter typography, geometry, density, capabilities, and the complete palette.
+- Switch **Light/Dark** to change the global family while the sidebar remains dark and the content island remains light.
+- Inspect the **Resolved surface map** to see the active MUI mode for each semantic context.
+- Use the form inside the content island to verify that dense controls retain predictable contrast over a translucent parent.

@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { useShallow } from 'zustand/react/shallow';
 import { parseTenantConfig, type TenantConfig } from '../config/tenant-config';
 import { fetchTenantConfig } from '../services/tenant-config-api';
 import type { TenantId, ThemeFamily } from '../theme/types';
@@ -59,9 +60,17 @@ export const useTenantStore = create<TenantState>((set, get) => ({
       try {
         const config = await fetchTenantConfig(requestedTenant);
         persistConfig(config);
-        set({ config, family: readMode() ?? config.defaultMode, isBootstrapping: false, error: null });
+        set({
+          config,
+          family: readMode() ?? config.defaultMode,
+          isBootstrapping: false,
+          error: null,
+        });
       } catch {
-        set({ isBootstrapping: false, error: cached ? null : 'Unable to load tenant configuration.' });
+        set({
+          isBootstrapping: false,
+          error: cached ? null : 'Unable to load tenant configuration.',
+        });
       } finally {
         bootstrapPromise = null;
       }
@@ -99,3 +108,19 @@ export const useTenantStore = create<TenantState>((set, get) => ({
 
   clearError: () => set({ error: null }),
 }));
+
+export function useTenantAppState() {
+  return useTenantStore(
+    useShallow((state) => ({
+      config: state.config,
+      family: state.family,
+      isBootstrapping: state.isBootstrapping,
+      isSwitching: state.isSwitching,
+      error: state.error,
+      bootstrap: state.bootstrap,
+      switchTenant: state.switchTenant,
+      toggleFamily: state.toggleFamily,
+      clearError: state.clearError,
+    })),
+  );
+}

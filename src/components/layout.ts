@@ -50,16 +50,24 @@ export const HeroSummary = styled('p')(({ theme }) => ({
 }));
 
 export const AmbientGlow = styled(Box)(({ theme }) => ({
-  position: 'absolute', width: 480, height: 480, borderRadius: '50%',
-  backgroundColor: theme.palette.primary.main, filter: 'blur(140px)', opacity: 0.2,
-  top: -260, right: -100, pointerEvents: 'none',
+  position: 'absolute',
+  width: 480,
+  height: 480,
+  borderRadius: '50%',
+  backgroundColor: theme.palette.primary.main,
+  filter: 'blur(140px)',
+  opacity: 0.2,
+  top: -260,
+  right: -100,
+  pointerEvents: 'none',
 }));
 
 export const GlassFrame = styled(Box)(({ theme }) => ({
   padding: theme.spacing(3),
-  borderRadius: typeof theme.shape.borderRadius === 'number'
-    ? theme.shape.borderRadius * 2
-    : theme.shape.borderRadius,
+  borderRadius:
+    typeof theme.shape.borderRadius === 'number'
+      ? theme.shape.borderRadius * 2
+      : theme.shape.borderRadius,
   backgroundColor: theme.palette.background.default,
   border: `1px solid ${theme.palette.divider}`,
   backdropFilter: theme.surface.backdropFilter,
@@ -78,13 +86,17 @@ export const ContentFrame = styled(Box)(({ theme }) => ({
 }));
 
 export const MetricGrid = styled(Box)(({ theme }) => ({
-  display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
-  gap: theme.spacing(2), marginBottom: theme.spacing(3),
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+  gap: theme.spacing(2),
+  marginBottom: theme.spacing(3),
   [theme.breakpoints.down('md')]: { gridTemplateColumns: '1fr' },
 }));
 
 export const FeatureGrid = styled(Box)(({ theme }) => ({
-  display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
-  gap: theme.spacing(2), marginTop: theme.spacing(4),
+  display: 'grid',
+  gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
+  gap: theme.spacing(2),
+  marginTop: theme.spacing(4),
   [theme.breakpoints.down('md')]: { gridTemplateColumns: '1fr' },
 }));

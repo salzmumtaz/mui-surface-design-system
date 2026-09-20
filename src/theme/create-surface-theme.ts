@@ -6,7 +6,11 @@ import type { SurfaceVariant, TenantId, ThemeFamily } from './types';
 
 const cache = new Map<string, Theme>();
 
-export function resolveTheme(tenant: TenantId, family: ThemeFamily, variant: SurfaceVariant): Theme {
+export function resolveTheme(
+  tenant: TenantId,
+  family: ThemeFamily,
+  variant: SurfaceVariant,
+): Theme {
   const key = `${tenant}:${family}:${variant}`;
   const cached = cache.get(key);
   if (cached) return cached;
@@ -40,7 +44,8 @@ export function resolveTheme(tenant: TenantId, family: ThemeFamily, variant: Sur
         hover: surface.mode === 'dark' ? 'rgba(255, 255, 255, 0.08)' : 'rgba(23, 26, 43, 0.06)',
         selected: surface.mode === 'dark' ? 'rgba(255, 255, 255, 0.12)' : 'rgba(23, 26, 43, 0.10)',
         disabled: surface.mode === 'dark' ? 'rgba(255, 255, 255, 0.46)' : 'rgba(23, 26, 43, 0.42)',
-        disabledBackground: surface.mode === 'dark' ? 'rgba(255, 255, 255, 0.08)' : 'rgba(23, 26, 43, 0.08)',
+        disabledBackground:
+          surface.mode === 'dark' ? 'rgba(255, 255, 255, 0.08)' : 'rgba(23, 26, 43, 0.08)',
       },
     },
     components,
